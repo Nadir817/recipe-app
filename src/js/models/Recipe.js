@@ -65,9 +65,9 @@ export default class Recipe {
 
         let count;
         if (arrCount.length === 1) {
-          count = eval(arrIng[0].replace("-", "+"));
+          count = arrIng[0];
         } else {
-          count = eval(arrIng.slice(0, unitIndex).join("+"));
+          count = arrIng[0];
         }
 
         objIng = {
@@ -92,5 +92,15 @@ export default class Recipe {
       return objIng;
     });
     this.ingredients = newIngredients;
+  }
+
+  updateServings(type) {
+    const newServings = type === "dec" ? this.servings - 1 : this.servings + 1;
+
+    this.ingredients.forEach(ing => {
+      ing.count *= newServings / this.servings;
+    });
+
+    this.servings = newServings;
   }
 }
